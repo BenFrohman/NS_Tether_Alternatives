@@ -1,17 +1,22 @@
 # NS_Tether_Alternatives
 
-Standalone exploratory repository for alternative paths around the C2/C3 obstruction in the Frohmanian Tether.
+Exploratory Lean formalizations and papers for alternative tether designs.
 
-**Canonical development remains in [BenFrohman/NS_Millennium_Proof](https://github.com/BenFrohman/NS_Millennium_Proof).**
-
-This repo is experimental. No Navier-Stokes regularity claim is made.
+**Author:** Benjamin Stanley Frohman  
+**Status:** Experimental. No claim that the Millennium Problem is solved.
 
 ## Tracks
 
-1. **A-posteriori classical path** (`a_posteriori/`): Estimate moved outside the bracket, applied to unmodified classical NS equations. Props that can be discharged from upstream.
+1. **A-posteriori route**  
+   Estimates moved outside the bracket and applied to solutions of the unmodified classical 3D incompressible Navier–Stokes equations. Geometric layer (symmetric TetherKernel, C2, route-2 canonicity) remains as motivation. Analytic bounds stay named open assumptions until discharged from upstream classical results.
 
-2. **+kappa (anti-damping) option** (`positive_kappa/`): Sign-flipped correction for comparison. Papers and Lean skeletons.
+2. **+κ (anti-damping) option**  
+   Sign of the correction flipped to +κ. The quadratic form becomes positive-semidefinite. Under the same C2 + symmetry the contribution to ˙M remains identically zero. If the obstruction were removed the term would accelerate growth. Included for completeness of the algebraic picture.
 
-All original May 2 provenance is preserved and cited; this is not a rewrite of the main geometric layer.
+## Clay / blow-up criteria
 
-Author: Benjamin Stanley Frohman
+Any future result that produces a Beale–Kato–Majda-type criterion or a global bound is conditional on the remaining analytic hypotheses. No unconditional regularity theorem is asserted here.
+
+## Authorship
+
+All original mathematics by Benjamin Stanley Frohman. Lean encoding assistance disclosed only in commit messages or PR bodies when used; never as Co-authored-by.
