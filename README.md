@@ -20,3 +20,22 @@ Any future result that produces a Beale–Kato–Majda-type criterion or a globa
 ## Authorship
 
 All original mathematics by Benjamin Stanley Frohman. Lean encoding assistance disclosed only in commit messages or PR bodies when used; never as Co-authored-by.
+
+## Workflow and audit discipline
+
+Every change to `main` follows the same checks:
+
+1. **Green build.** `lake build` finishes with no errors.
+2. **Standard axioms only.** `#print axioms` on each certificate lists only `propext`, `Classical.choice` and `Quot.sound`. Any `sorryAx` or user `axiom` fails the audit and must be listed by name and location.
+3. **Open assumptions are visible.** Each analytic input that is not yet proved appears as an explicit hypothesis in a theorem statement, never as a hidden `axiom` or a `sorry`.
+4. **No `sorry` on the geometric layer.** The bracket, kernel and Gâteaux files build with zero `sorry` warnings.
+5. **Paper matches the code.** After each green push, a Zenodo paper is published that lists exactly the machine-checked certificates and the open assumptions of that commit, and nothing more.
+
+Licensing: code is Apache-2.0 (`LICENSE`); papers and notes are CC-BY-4.0 (`LICENSE-CC-BY-4.0`).
+Copyright (c) 2026 Benjamin Stanley Frohman.
+
+### Current audit (2026-11-04)
+
+- `NonSymmetric/NonSymmetricTether.lean` compiles against Mathlib (checked with `lake env lean` from a Mathlib project). `nonSymmetricTetherKernel_diag` uses standard axioms only. There is no `sorry` and no `axiom`.
+- This repo has no lakefile yet. `TrajectoryDistinction.lean` imports `NS_Millennium_Proof` and only builds inside that project.
+- Open item inherited from NS_Millennium_Proof: δH = ψ, not u, in the vorticity pairing (see `paper/NS_Tether_Alternatives.pdf`).
