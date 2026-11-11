@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it using the metadata below."
+type: software
+title: "NS_Tether_Alternatives: exploratory formalizations of alternative tether designs"
+authors:
+  - family-names: "Frohman"
+    given-names: "Benjamin Stanley"
+    alias: "B.S. Frohman"
+    orcid: "https://orcid.org/0009-0006-7068-3718"
+    email: "frohmanbenjamin@gmail.com"
+    affiliation: "Independent Researcher, Texas, United States"
+repository-code: "https://github.com/BenFrohman/NS_Tether_Alternatives"
+license: Apache-2.0
+abstract: "Exploratory, uncompiled Lean sketches and notes for alternative tether designs: an a-posteriori route on classical 3D Navier–Stokes and the +κ (anti-damping) sign variant. No regularity claims."

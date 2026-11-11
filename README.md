@@ -20,3 +20,23 @@ Any future result that produces a Beale–Kato–Majda-type criterion or a globa
 ## Authorship
 
 All original mathematics by Benjamin Stanley Frohman. Lean encoding assistance disclosed only in commit messages or PR bodies when used; never as Co-authored-by.
+
+## Status of the Lean files
+
+The Lean files here are schematic drafts. They are **not compiled**: there is no `lakefile` or `lean-toolchain` in this repository, and nothing here is kernel-checked.
+
+- `TrajectoryDistinction.lean` imports `NS_Millennium_Proof.Modules.ArnoldGeometric`, so it only makes sense inside [BenFrohman/NS_Millennium_Proof](https://github.com/BenFrohman/NS_Millennium_Proof). It contains two type definitions and no theorems.
+- `NonSymmetric/NonSymmetricTether.lean` defines an experimental non-symmetric kernel. It contains no theorems.
+- `non_symmetric/NonSymmetricTether.lean` is a placeholder skeleton. It states its C2 property as an `axiom` (`T_on_H`), not as a proved theorem, and `κ` is not yet bound.
+
+There are 0 `sorry`s, 0 theorems and 1 `axiom` across these files.
+
+## Citation
+
+Cite this work with [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repository" button). There is no Zenodo record for this repository.
+
+## License and copyright
+
+Licensed under the Apache License, Version 2.0. See [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
+
+© 2026 Benjamin Stanley Frohman.
