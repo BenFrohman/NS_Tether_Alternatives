@@ -6,6 +6,12 @@ Authors: Benjamin Stanley Frohman
 
 import Mathlib.Analysis.InnerProductSpace.Basic
 
+/-!
+# NonSymmetric.NonSymmetricTether
+
+Machine-checked Lean 4 module.
+-/
+
 open InnerProductSpace
 
 namespace NonSymmetricTether

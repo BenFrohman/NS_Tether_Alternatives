@@ -7,6 +7,8 @@ Authors: Benjamin Stanley Frohman
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
+# non_symmetric.NonSymmetricTether
+
 Minimal skeleton for the non-symmetric candidate.
 Not yet imported into the main geometric layer.
 -/
