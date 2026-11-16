@@ -7,6 +7,12 @@ Authors: Benjamin Stanley Frohman
 import Mathlib.LinearAlgebra.CrossProduct
 import Mathlib.Data.Real.Basic
 
+/-!
+# NonSymmetric.NonSymmetricTether
+
+Machine-checked Lean 4 module.
+-/
+
 open Matrix
 open scoped Matrix
 

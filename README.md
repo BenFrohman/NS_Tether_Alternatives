@@ -39,3 +39,23 @@ Copyright (c) 2026 Benjamin Stanley Frohman.
 - `NonSymmetric/NonSymmetricTether.lean` compiles against Mathlib (checked with `lake env lean` from a Mathlib project). `nonSymmetricTetherKernel_diag` uses standard axioms only. There is no `sorry` and no `axiom`.
 - This repo has no lakefile yet. `TrajectoryDistinction.lean` imports `NS_Millennium_Proof` and only builds inside that project.
 - Open item inherited from NS_Millennium_Proof: δH = ψ, not u, in the vorticity pairing (see `paper/NS_Tether_Alternatives.pdf`).
+
+## Status of the Lean files (2026-11-16)
+
+The repository has a `lakefile.lean`, `lean-toolchain` and `lake-manifest.json`, pinned to Lean `v4.30.0-rc1` and Mathlib `v4.30.0-rc1` (the same pin as BenFrohman/NS_Millennium_Proof). CI (`.github/workflows/lean.yml`) runs `lake build`, a no-sorry/axiom token scan and a `#print axioms` audit on every push and pull request.
+
+- `NonSymmetric/NonSymmetricTether.lean` is built. It defines an experimental non-symmetric kernel and proves one theorem, `nonSymmetricTetherKernel_diag` (the diagonal `B(F,F)` vanishes), using only `propext`, `Classical.choice` and `Quot.sound`.
+- `TrajectoryDistinction.lean` is built. It imports `NS_Millennium_Proof.Modules.ArnoldGeometric`, pinned by `lakefile.lean` to NS_Millennium_Proof commit `aa04c4feec0813c16778a016dc793dc9c542e6bd`. It contains two type definitions and no theorems.
+- `non_symmetric/NonSymmetricTether.lean` is **not built**. It is a placeholder skeleton that states its C2 property as an `axiom` (`T_on_H`), not as a proved theorem, and `κ` is not yet bound, so it does not elaborate. It stays in the tree as a draft and is excluded in `lakefile.lean`.
+
+Across the built files there are 0 `sorry`s, 0 `axiom`s and 1 theorem. The excluded draft contains 1 `axiom`. A kernel check says only that Lean accepts these definitions and proofs; it does not say they match the intended mathematics.
+
+## Citation
+
+Cite this work with [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repository" button). There is no Zenodo record for this repository.
+
+## License and copyright
+
+Code is licensed under the Apache License, Version 2.0 (see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE)). Papers and notes are licensed under CC-BY-4.0 (see [`LICENSE-CC-BY-4.0`](LICENSE-CC-BY-4.0)).
+
+© 2026 Benjamin Stanley Frohman.
