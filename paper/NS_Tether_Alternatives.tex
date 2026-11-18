@@ -1,0 +1,28 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,hyperref}
+\title{NS\_Tether\_Alternatives: Certificates and Open Assumptions}
+\author{Frohman, Benjamin Stanley\\ ORCID 0009-0006-7068-3718\\ \texttt{frohmanbenjamin@gmail.com}}
+\date{November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+An exploratory repository of alternative tether designs. This note lists exactly what is machine-checked. No regularity result for Navier--Stokes is claimed.
+\end{abstract}
+\section{Machine-checked (theorem)}
+\begin{itemize}
+\item \texttt{NonSymmetricTether.nonSymmetricTetherKernel\_diag}: for the kernel $N(F,G)=-\kappa\|\omega\|^2\,(\Pi F\times e)\cdot\Pi G$ on $\mathbb{R}^3$, $N(F,F)=0$. \texttt{\#print axioms}: \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}. No \texttt{sorry}.
+\end{itemize}
+Related results proved in the companion repository \texttt{frohmanian-tether-sdiff} (branch \texttt{drop-symmetry-candidate}, standard axioms): antisymmetry of the integrated cross-product kernel, $T(F,F)=0$, and $T(H,\cdot)=T(\cdot,H)=0$ given $\delta H=u$, $\operatorname{div}u=0$, $E\neq0$.
+\section{Stated, not machine-checked}
+\begin{itemize}
+\item The a-posteriori route and the $+\kappa$ option (prose only).
+\item Any quantitative bound for the non-symmetric kernel; a canonical $e$ where $\omega=0$ (Lean sets $e=0$).
+\end{itemize}
+\section{Structural obstruction}
+An antisymmetric kernel dissipates nothing ($T(F,F)=0$). Together with C2 ($T(H,\cdot)=0$), antisymmetry forces $T(M,H)=0$, so this candidate cannot supply damping of $M$.
+\section{Open item: $\delta H=\psi$, not $u$}
+In the vorticity pairing, $\frac{d}{dt}H(\omega+t\varepsilon)|_0=\int\langle u,\mathrm{BS}\,\varepsilon\rangle=\int\langle\psi,\varepsilon\rangle$. The hypothesis $\delta H=u$ is false as stated. Counterexample: $u=(\sin z,0,0)$, $\omega=(0,\cos z,0)$, $\varepsilon=\omega$. The derivative is $\int|u|^2>0$ while $\int\langle u,\omega\rangle=0$. The C2 statements above that assume $\delta H=u$ are conditional on it.
+\section*{License}
+Text CC-BY-4.0; code Apache-2.0. Copyright \copyright\ 2026 Benjamin Stanley Frohman.
+\end{document}
