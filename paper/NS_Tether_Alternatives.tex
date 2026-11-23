@@ -3,26 +3,53 @@
 \usepackage{amsmath,amssymb,hyperref}
 \title{NS\_Tether\_Alternatives: Certificates and Open Assumptions}
 \author{Frohman, Benjamin Stanley\\ ORCID 0009-0006-7068-3718\\ \texttt{frohmanbenjamin@gmail.com}}
-\date{November 2026}
+\date{23 November 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
 An exploratory repository of alternative tether designs. This note lists exactly what is machine-checked. No regularity result for Navier--Stokes is claimed.
 \end{abstract}
 \section{Machine-checked (theorem)}
+Vectors in $\mathbb{R}^3$ are formalized as maps $\mathrm{Fin}\,3\to\mathbb{R}$.
+The kernel is
+\[
+\texttt{NonSymmetricTetherKernel}\,\kappa\,\omega_{\mathrm{norm\_sq}}\,e\,F\,G
+=-\kappa\cdot\omega_{\mathrm{norm\_sq}}\cdot\bigl((F\times e)\cdot G\bigr).
+\]
+The projection is $\Pi_u v=v-\bigl(\langle v,u\rangle/\langle u,u\rangle\bigr)u$, with $\Pi_0 v=v$.
+\texttt{\#print axioms} on each theorem below is \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}. There is no \texttt{sorry}.
 \begin{itemize}
-\item \texttt{NonSymmetricTether.nonSymmetricTetherKernel\_diag}: for the kernel $N(F,G)=-\kappa\|\omega\|^2\,(\Pi F\times e)\cdot\Pi G$ on $\mathbb{R}^3$, $N(F,F)=0$. \texttt{\#print axioms}: \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}. No \texttt{sorry}.
+\item \texttt{NonSymmetricTether.nonSymmetricTetherKernel\_diag}:
+for all $\kappa,\omega_{\mathrm{norm\_sq}}\in\mathbb{R}$ and all $e,F:\mathrm{Fin}\,3\to\mathbb{R}$,
+\[
+\texttt{NonSymmetricTetherKernel}\,\kappa\,\omega_{\mathrm{norm\_sq}}\,e\,F\,F=0.
+\]
+\item \texttt{NonSymmetricC2.Pi\_u\_self}:
+for all $u:\mathrm{Fin}\,3\to\mathbb{R}$,
+\[
+\Pi_u u=0.
+\]
+\item \texttt{NonSymmetricC2.T\_on\_H}:
+for all $\kappa,\omega_{\mathrm{norm\_sq}}\in\mathbb{R}$ and all $e,u,w:\mathrm{Fin}\,3\to\mathbb{R}$,
+\[
+\texttt{NonSymmetricTetherKernel}\,\kappa\,\omega_{\mathrm{norm\_sq}}\,e\,(\Pi_u u)\,w=0.
+\]
+The Lean statement has no further hypothesis. The module docstring reads this as C2 in the first slot under the identification $\delta H=u$ (so that $\Pi_u\delta H=\Pi_u u$); that identification is not a hypothesis of the theorem. The result follows from $\Pi_u u=0$ and gives no damping or regularity bound.
 \end{itemize}
-Related results proved in the companion repository \texttt{frohmanian-tether-sdiff} (branch \texttt{drop-symmetry-candidate}, standard axioms): antisymmetry of the integrated cross-product kernel, $T(F,F)=0$, and $T(H,\cdot)=T(\cdot,H)=0$ given $\delta H=u$, $\operatorname{div}u=0$, $E\neq0$.
+{\sloppy Related results proved in the companion repository
+\texttt{frohmanian-tether-sdiff}
+(branch \texttt{drop-symmetry-candidate}, standard axioms):
+antisymmetry of the integrated cross-product kernel, $T(F,F)=0$, and $T(H,\cdot)=T(\cdot,H)=0$ given $\delta H=u$, $\operatorname{div}u=0$, $E\neq0$.
+\par}
 \section{Stated, not machine-checked}
 \begin{itemize}
 \item The a-posteriori route and the $+\kappa$ option (prose only).
-\item Any quantitative bound for the non-symmetric kernel; a canonical $e$ where $\omega=0$ (Lean sets $e=0$).
+\item Any quantitative bound for the non-symmetric kernel. A canonical choice of $e$ at points where $\omega=0$ is not machine-checked: in Lean, $e$ is a free parameter and is not set to $0$.
 \end{itemize}
 \section{Structural obstruction}
 An antisymmetric kernel dissipates nothing ($T(F,F)=0$). Together with C2 ($T(H,\cdot)=0$), antisymmetry forces $T(M,H)=0$, so this candidate cannot supply damping of $M$.
-\section{Open item: $\delta H=\psi$, not $u$}
-In the vorticity pairing, $\frac{d}{dt}H(\omega+t\varepsilon)|_0=\int\langle u,\mathrm{BS}\,\varepsilon\rangle=\int\langle\psi,\varepsilon\rangle$. The hypothesis $\delta H=u$ is false as stated. Counterexample: $u=(\sin z,0,0)$, $\omega=(0,\cos z,0)$, $\varepsilon=\omega$. The derivative is $\int|u|^2>0$ while $\int\langle u,\omega\rangle=0$. The C2 statements above that assume $\delta H=u$ are conditional on it.
+\section{Open item: \texorpdfstring{$\delta H=\psi$, not $u$}{delta H = psi, not u}}
+In the vorticity pairing, $\frac{d}{dt}H(\omega+t\varepsilon)|_0=\int\langle u,\mathrm{BS}\,\varepsilon\rangle=\int\langle\psi,\varepsilon\rangle$. The hypothesis $\delta H=u$ is false as stated. Counterexample: $u=(\sin z,0,0)$, $\omega=(0,\cos z,0)$, $\varepsilon=\omega$. The derivative is $\int|u|^2>0$ while $\int\langle u,\omega\rangle=0$. The C2 reading of \texttt{T\_on\_H} that assumes $\delta H=u$ is conditional on that identification, which is not a hypothesis of the Lean theorem.
 \section*{License}
 Text CC-BY-4.0; code Apache-2.0. Copyright \copyright\ 2026 Benjamin Stanley Frohman.
 \end{document}
