@@ -42,6 +42,7 @@ jobs:
         run: |
           set -o pipefail
           lake build 2>&1 | tee cert-out/build.log
+          python3 scripts/check_build_log.py cert-out/build.log
       - name: Coverage (every tracked .lean file is built, run by CI, or a verified excerpt)
         run: |
           set -o pipefail
