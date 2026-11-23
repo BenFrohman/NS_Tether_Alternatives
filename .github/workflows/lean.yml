@@ -42,8 +42,15 @@ jobs:
       - name: Fetch Mathlib build cache
         run: lake exe cache get
 
+      - name: No-skip guard (every line of every workflow and CI script)
+        run: python3 scripts/check_no_skips.py
+
       - name: Build project (lake build)
-        run: lake build
+        run: |
+          set -o pipefail
+          mkdir -p cert-out
+          lake build 2>&1 | tee cert-out/lake-build.log
+          python3 scripts/check_build_log.py cert-out/lake-build.log
 
       - name: No sorry / admit / native_decide / axiom declarations (comments excluded)
         run: |
@@ -71,4 +78,5 @@ jobs:
           path: |
             strict-axiom-audit.txt
             print-axioms.txt
+            cert-out/lake-build.log
           if-no-files-found: ignore
