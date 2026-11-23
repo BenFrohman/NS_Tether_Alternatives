@@ -46,9 +46,9 @@ The repository has a `lakefile.lean`, `lean-toolchain` and `lake-manifest.json`,
 
 - `NonSymmetric/NonSymmetricTether.lean` is built. It defines an experimental non-symmetric kernel and proves one theorem, `nonSymmetricTetherKernel_diag` (the diagonal `B(F,F)` vanishes), using only `propext`, `Classical.choice` and `Quot.sound`.
 - `TrajectoryDistinction.lean` is built. It imports `NS_Millennium_Proof.Modules.ArnoldGeometric`, pinned by `lakefile.lean` to NS_Millennium_Proof commit `aa04c4feec0813c16778a016dc793dc9c542e6bd`. It contains two type definitions and no theorems.
-- `non_symmetric/NonSymmetricTether.lean` is **not built**. It is a placeholder skeleton that states its C2 property as an `axiom` (`T_on_H`), not as a proved theorem, and `κ` is not yet bound, so it does not elaborate. It stays in the tree as a draft and is excluded in `lakefile.lean`.
+- `non_symmetric/NonSymmetricTether.lean` is built (Lake target `NonSymmetricC2`, revised 2026-11-23). It defines the projection `Π_u v = v - (⟨v,u⟩/⟨u,u⟩) u` and proves `Pi_u_self` (`Π_u u = 0`) and `T_on_H` (the kernel vanishes when its first slot is `Π_u δH` with `δH = u`). `T_on_H` was previously an `axiom` in a file that did not elaborate; it is now a theorem. It follows from `Π_u u = 0` alone, so it holds for any kernel whose first slot is pre-projected by `Π_u` and gives no damping or regularity bound.
 
-Across the built files there are 0 `sorry`s, 0 `axiom`s and 1 theorem. The excluded draft contains 1 `axiom`. A kernel check says only that Lean accepts these definitions and proofs; it does not say they match the intended mathematics.
+Across all tracked Lean files there are 0 `sorry`s, 0 `axiom`s and 3 theorems. A kernel check says only that Lean accepts these definitions and proofs; it does not say they match the intended mathematics.
 
 ## Citation
 

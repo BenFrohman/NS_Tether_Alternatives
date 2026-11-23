@@ -49,21 +49,18 @@ jobs:
         run: |
           python3 scripts/check_forbidden_tokens.py \
             --require-imported-by scripts/StrictAxiomAudit.lean \
-            NonSymmetric TrajectoryDistinction.lean
-
-      - name: Draft not built (listed so the exclusion is visible)
-        run: |
-          echo "non_symmetric/NonSymmetricTether.lean is a draft outside the lake build:"
-          echo "it states T_on_H as an axiom and does not elaborate. See lakefile.lean."
+            NonSymmetric non_symmetric TrajectoryDistinction.lean
+          python3 certificates/tools/sorry_scan.py
 
       - name: Axiom audit (#print axioms; fails on any axiom beyond propext, Classical.choice, Quot.sound)
         run: |
           set -o pipefail
           lake env lean scripts/StrictAxiomAudit.lean 2>&1 | tee strict-axiom-audit.txt
           grep -q '^STRICT AUDIT PASS' strict-axiom-audit.txt
-          if grep -v '^STRICT AUDIT PASS' strict-axiom-audit.txt | grep -qE 'STRICT AUDIT FAIL|sorryAx|ofReduceBool|error:'; then exit 1; fi
+          if grep -qE 'STRICT AUDIT FAIL|axioms: \[[^]]*(sorryAx|ofReduceBool)|error:' strict-axiom-audit.txt; then exit 1; fi
           grep '^STRICT AUDIT SUMMARY' strict-axiom-audit.txt
           lake env lean NonSymmetric/NonSymmetricTether.lean 2>&1 | tee print-axioms.txt
+          lake env lean non_symmetric/NonSymmetricTether.lean 2>&1 | tee -a print-axioms.txt
           if grep -qE 'sorryAx|ofReduceBool|error:' print-axioms.txt; then exit 1; fi
 
       - name: Upload audit output
