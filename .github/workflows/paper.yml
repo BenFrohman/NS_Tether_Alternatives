@@ -1,0 +1,32 @@
+name: Paper
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  paper:
+    name: Rebuild paper PDF
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Rebuild paper/NS_Tether_Alternatives.pdf
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: NS_Tether_Alternatives.tex
+          working_directory: paper
+
+      - name: Upload rebuilt PDF
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-pdf
+          path: paper/NS_Tether_Alternatives.pdf
+          if-no-files-found: error
