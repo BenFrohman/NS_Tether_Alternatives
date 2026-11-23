@@ -2,7 +2,10 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb,hyperref}
 \title{NS\_Tether\_Alternatives: Certificates and Open Assumptions}
-\author{Frohman, Benjamin Stanley\\ ORCID 0009-0006-7068-3718\\ \texttt{frohmanbenjamin@gmail.com}}
+\author{Frohman, Benjamin Stanley\\
+Independent Researcher, Texas, United States\\
+ORCID 0009-0006-7068-3718\\
+\texttt{frohmanbenjamin@gmail.com}}
 \date{23 November 2026}
 \begin{document}
 \maketitle
@@ -16,6 +19,7 @@ The kernel is
 \texttt{NonSymmetricTetherKernel}\,\kappa\,\omega_{\mathrm{norm\_sq}}\,e\,F\,G
 =-\kappa\cdot\omega_{\mathrm{norm\_sq}}\cdot\bigl((F\times e)\cdot G\bigr).
 \]
+Here $e:\mathrm{Fin}\,3\to\mathbb{R}$ is a parameter of both \texttt{NonSymmetricTetherKernel} and \texttt{T\_on\_H}, exactly as in Lean.
 The projection is $\Pi_u v=v-\bigl(\langle v,u\rangle/\langle u,u\rangle\bigr)u$, with $\Pi_0 v=v$.
 \texttt{\#print axioms} on each theorem below is \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}. There is no \texttt{sorry}.
 \begin{itemize}
@@ -36,15 +40,14 @@ for all $\kappa,\omega_{\mathrm{norm\_sq}}\in\mathbb{R}$ and all $e,u,w:\mathrm{
 \]
 The Lean statement has no further hypothesis. The module docstring reads this as C2 in the first slot under the identification $\delta H=u$ (so that $\Pi_u\delta H=\Pi_u u$); that identification is not a hypothesis of the theorem. The result follows from $\Pi_u u=0$ and gives no damping or regularity bound.
 \end{itemize}
-{\sloppy Related results proved in the companion repository
+{\sloppy Results recorded in the companion repository
 \texttt{frohmanian-tether-sdiff}
-(branch \texttt{drop-symmetry-candidate}, standard axioms):
-antisymmetry of the integrated cross-product kernel, $T(F,F)=0$, and $T(H,\cdot)=T(\cdot,H)=0$ given $\delta H=u$, $\operatorname{div}u=0$, $E\neq0$.
+(branch \texttt{drop-symmetry-candidate})---antisymmetry of the integrated cross-product kernel, $T(F,F)=0$, and $T(H,\cdot)=T(\cdot,H)=0$ given $\delta H=u$, $\operatorname{div}u=0$, $E\neq0$---are not covered by this repository's official kernel certificate.
 \par}
 \section{Stated, not machine-checked}
 \begin{itemize}
 \item The a-posteriori route and the $+\kappa$ option (prose only).
-\item Any quantitative bound for the non-symmetric kernel. A canonical choice of $e$ at points where $\omega=0$ is not machine-checked: in Lean, $e$ is a free parameter and is not set to $0$.
+\item Any quantitative bound for the non-symmetric kernel. A canonical choice of $e$ at points where $\omega=0$ is not machine-checked: $e:\mathrm{Fin}\,3\to\mathbb{R}$ is a parameter of \texttt{NonSymmetricTetherKernel} and of \texttt{T\_on\_H}, and Lean does not set $e=0$.
 \end{itemize}
 \section{Structural obstruction}
 An antisymmetric kernel dissipates nothing ($T(F,F)=0$). Together with C2 ($T(H,\cdot)=0$), antisymmetry forces $T(M,H)=0$, so this candidate cannot supply damping of $M$.
