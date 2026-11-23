@@ -1,0 +1,74 @@
+name: Lean CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (lake) + no-sorry + axiom audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install elan (Lean toolchain manager)
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Report toolchain
+        run: |
+          cat lean-toolchain
+          lake --version
+          lean --version
+
+      - name: Cache the pinned NS_Millennium_Proof dependency build
+        uses: actions/cache@v4
+        with:
+          path: .lake/packages/NS_Millennium_Proof/.lake
+          key: ns-dep-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
+
+      - name: Fetch Mathlib build cache
+        run: lake exe cache get
+
+      - name: Build project (lake build)
+        run: lake build
+
+      - name: No sorry / admit / native_decide / axiom declarations (comments excluded)
+        run: |
+          python3 scripts/check_forbidden_tokens.py \
+            --require-imported-by scripts/StrictAxiomAudit.lean \
+            NonSymmetric non_symmetric TrajectoryDistinction.lean
+          python3 certificates/tools/sorry_scan.py
+
+      - name: Axiom audit (#print axioms; fails on any axiom beyond propext, Classical.choice, Quot.sound)
+        run: |
+          set -o pipefail
+          lake env lean scripts/StrictAxiomAudit.lean 2>&1 | tee strict-axiom-audit.txt
+          grep -q '^STRICT AUDIT PASS' strict-axiom-audit.txt
+          if grep -qE 'STRICT AUDIT FAIL|axioms: \[[^]]*(sorryAx|ofReduceBool)|error:' strict-axiom-audit.txt; then exit 1; fi
+          grep '^STRICT AUDIT SUMMARY' strict-axiom-audit.txt
+          lake env lean NonSymmetric/NonSymmetricTether.lean 2>&1 | tee print-axioms.txt
+          lake env lean non_symmetric/NonSymmetricTether.lean 2>&1 | tee -a print-axioms.txt
+          if grep -qE 'sorryAx|ofReduceBool|error:' print-axioms.txt; then exit 1; fi
+
+      - name: Upload audit output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: axiom-audit
+          path: |
+            strict-axiom-audit.txt
+            print-axioms.txt
+          if-no-files-found: ignore
